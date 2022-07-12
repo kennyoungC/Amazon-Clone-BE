@@ -2,6 +2,7 @@ import express from "express"
 import createHttpError from "http-errors"
 import uniqid from "uniqid"
 import { getReviews, writeRewiews } from "../../libs/index.js"
+import { checkReviewSchema, checkValidationResult } from "./validation.js"
 
 const reviewsRouter = express.Router()
 
@@ -17,26 +18,31 @@ reviewsRouter.get("/:productId", async (req, res, next) => {
     next(error)
   }
 })
-reviewsRouter.post("/:productId", async (req, res, next) => {
-  try {
-    const reviews = await getReviews()
-    const { comment, rate } = req.body
-    const { productId } = req.params
-    const newReview = {
-      _id: uniqid(),
-      productId,
-      comment,
-      rate,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+reviewsRouter.post(
+  "/:productId",
+  checkReviewSchema,
+  checkValidationResult,
+  async (req, res, next) => {
+    try {
+      const reviews = await getReviews()
+      const { comment, rate } = req.body
+      const { productId } = req.params
+      const newReview = {
+        _id: uniqid(),
+        productId,
+        comment,
+        rate,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+      reviews.push(newReview)
+      await writeRewiews(reviews)
+      res.send(newReview)
+    } catch (error) {
+      next(error)
     }
-    reviews.push(newReview)
-    await writeRewiews(reviews)
-    res.send(newReview)
-  } catch (error) {
-    next(error)
   }
-})
+)
 reviewsRouter.get("/:productId/review/:reviewId", async (req, res, next) => {
   try {
     const reviews = await getReviews()
