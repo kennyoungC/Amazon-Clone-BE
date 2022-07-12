@@ -1,6 +1,7 @@
 import express from "express"
 import createHttpError from "http-errors"
 import uniqid from "uniqid"
+import { checkProductSchema, checkValidationResult } from "./validation.js"
 
 import { getProducts, writeProducts } from "../../libs/index.js"
 
@@ -14,23 +15,28 @@ productRouter.get("/", async (req, res, next) => {
     next(error)
   }
 })
-productRouter.post("/", async (req, res, next) => {
-  try {
-    const products = await getProducts()
-    const newProduct = {
-      _id: uniqid(),
-      ...req.body,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }
-    products.push(newProduct)
-    await writeProducts(products)
+productRouter.post(
+  "/",
+  checkProductSchema,
+  checkValidationResult,
+  async (req, res, next) => {
+    try {
+      const products = await getProducts()
+      const newProduct = {
+        _id: uniqid(),
+        ...req.body,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+      products.push(newProduct)
+      await writeProducts(products)
 
-    res.status(201).send({ newProduct: newProduct._id })
-  } catch (error) {
-    next(error)
+      res.status(201).send({ newProduct: newProduct._id })
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 productRouter.get("/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params
