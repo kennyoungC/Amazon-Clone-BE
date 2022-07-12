@@ -1,1 +1,35 @@
-[{"_id":"30d6l7ycl5i9llaa","name":"3310","description":"somthing longer","brand":"nokia","imageUrl":"https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80","price":100,"category":"smartphones","createdAt":"2022-07-12T14:24:32.769Z","updatedAt":"2022-07-12T14:24:32.769Z"}]
+[
+  {
+    "_id": "30d6l7ycl5i9llaa",
+    "name": "3310",
+    "description": "somthing longer ",
+    "brand": "nokia",
+    "imageUrl": "https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80",
+    "price": 200,
+    "category": "smartphones",
+    "createdAt": "2022-07-12T14:24:32.769Z",
+    "updatedAt": "2022-07-12T19:48:31.690Z"
+  },
+  {
+    "_id": "30d6l8i0l5ikqyzu",
+    "description": "somthing longer new added",
+    "imageUrl": "https://placeholder.com/150",
+    "name": "samsung s20",
+    "price": 500,
+    "brand": "samsung",
+    "category": "smartphones",
+    "createdAt": "2022-07-12T19:36:39.593Z",
+    "updatedAt": "2022-07-12T19:36:39.593Z"
+  },
+  {
+    "_id": "30d6l8i0l5iku1zy",
+    "description": "somthing longer new added",
+    "imageUrl": "https://placeholder.com/150",
+    "name": "samsung s20",
+    "price": 500,
+    "brand": "samsung",
+    "category": "smartphones",
+    "createdAt": "2022-07-12T19:39:03.454Z",
+    "updatedAt": "2022-07-12T19:39:03.454Z"
+  }
+]

@@ -39,8 +39,17 @@ const productSchema = {
     },
   },
 }
+const productQuerySchema = {
+  category: {
+    in: ["query"],
+    isString: {
+      errorMessage: "category must be in query and type must be string",
+    },
+  },
+}
 
 export const checkProductSchema = checkSchema(productSchema)
+export const checkProductQuerySchema = checkSchema(productQuerySchema)
 
 export const checkValidationResult = (req, res, next) => {
   const errors = validationResult(req)

@@ -3,14 +3,26 @@ import createHttpError from "http-errors"
 import uniqid from "uniqid"
 import { checkProductSchema, checkValidationResult } from "./validation.js"
 
-import { getProducts, writeProducts } from "../../libs/index.js"
+import {
+  getProducts,
+  saveUsersProductImg,
+  writeProducts,
+} from "../../libs/index.js"
+import multer from "multer"
 
 const productRouter = express.Router()
 
 productRouter.get("/", async (req, res, next) => {
   try {
     const products = await getProducts()
-    res.send(products)
+    if (req.query && req.query.category) {
+      const filteredProd = products.filter((prod) =>
+        prod.category.toLowerCase().includes(req.query.category.toLowerCase())
+      )
+      res.send(filteredProd)
+    } else {
+      res.send(products)
+    }
   } catch (error) {
     next(error)
   }
@@ -21,10 +33,16 @@ productRouter.post(
   checkValidationResult,
   async (req, res, next) => {
     try {
+      const { description, brand, name, category, price, imageUrl } = req.body
       const products = await getProducts()
       const newProduct = {
         _id: uniqid(),
-        ...req.body,
+        description,
+        imageUrl,
+        name,
+        price,
+        brand,
+        category,
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -51,30 +69,42 @@ productRouter.get("/:productId", async (req, res, next) => {
     console.log(error)
   }
 })
-productRouter.put("/:productId", async (req, res, next) => {
-  try {
-    const { productId } = req.params
-    const products = await getProducts()
-    const foundProductIndex = products.findIndex(
-      (prod) => prod._id === productId
-    )
-    if (foundProductIndex !== -1) {
-      const oldProduct = products[foundProductIndex]
+productRouter.put(
+  "/:productId",
+  checkProductSchema,
+  checkValidationResult,
+  async (req, res, next) => {
+    try {
+      const { description, brand, name, category, price, imageUrl } = req.body
+      const { productId } = req.params
+      const products = await getProducts()
+      const foundProductIndex = products.findIndex(
+        (prod) => prod._id === productId
+      )
+      if (foundProductIndex !== -1) {
+        const oldProduct = products[foundProductIndex]
 
-      const updatedProduct = {
-        ...oldProduct,
-        ...req.body,
-        updatedAt: new Date(),
+        const updatedProduct = {
+          ...oldProduct,
+          description,
+          imageUrl,
+          name,
+          price,
+          brand,
+          category,
+          updatedAt: new Date(),
+        }
+        products[foundProductIndex] = updatedProduct
+        await writeProducts(products)
+        res.send(updatedProduct)
+      } else {
+        next(createHttpError(404, `Product with id ${productId} not found`))
       }
-      products[foundProductIndex] = updatedProduct
-      res.send(updatedProduct)
-    } else {
-      next(createHttpError(404, `Product with id ${productId} not found`))
+    } catch (error) {
+      next(error)
     }
-  } catch (error) {
-    next(error)
   }
-})
+)
 productRouter.delete("/:productId", async (req, res, next) => {
   try {
     const products = await getProducts()
@@ -90,3 +120,44 @@ productRouter.delete("/:productId", async (req, res, next) => {
   }
 })
 export default productRouter
+
+productRouter.post(
+  "/:productId/upload",
+  multer({
+    fileFilter: (req, file, multerNext) => {
+      if (file.mimetype.startsWith("image/")) {
+        multerNext(null, true)
+      } else {
+        multerNext(createHttpError(400, "Only images are allowed!"))
+      }
+    },
+  }).single("product"),
+  async (req, res, next) => {
+    try {
+      const { productId } = req.params
+      const products = await getProducts()
+      const foundProductIndex = products.findIndex(
+        (prod) => prod._id === productId
+      )
+      if (foundProductIndex !== -1) {
+        const foundProduct = products[foundProductIndex]
+        const ext = req.file.mimetype.split("/")[1]
+        const fileName = `${productId}.${ext}`
+        await saveUsersProductImg(fileName, req.file.buffer)
+        const link = `http://localhost:3003/img/products/${fileName}`
+        const updatedProduct = {
+          ...foundProduct,
+          imageUrl: link,
+        }
+        console.log(updatedProduct)
+        products[foundProductIndex] = updatedProduct
+        await writeProducts(products)
+        res.send()
+      } else {
+        next(createHttpError(404, `Product with id ${productId} not found`))
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+)

@@ -6,6 +6,7 @@ import {
   badRequestHandlers,
   unaunthorizedErrorHandler,
 } from "./errorHandlers.js"
+import reviewsRouter from "./apis/reviews/index.js"
 
 const server = express()
 const port = 3003
@@ -15,6 +16,7 @@ server.use(cors())
 
 // ******ENDPOINTS ********
 server.use("/products", productRouter)
+server.use("/reviews", reviewsRouter)
 
 // *********** Middleware Error Handlers ***********
 server.use(badRequestHandlers)
