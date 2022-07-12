@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "_id": "30d6lefcl5imwasg",
+    "productId": "30d6l8i0l5ikqyzu",
+    "comment": "lost but found careless owner review",
+    "rate": 4,
+    "createdAt": "2022-07-12T20:36:47.391Z",
+    "updatedAt": "2022-07-12T21:29:08.434Z"
+  },
+  {
+    "_id": "30d6lmrol5imq181",
+    "productId": "30d6l7ycl5i9llaa",
+    "comment": "A good book but definitely I don't like many parts of the plot",
+    "rate": 3,
+    "createdAt": "2022-07-12T20:31:55.056Z"
+  },
+  {
+    "_id": "30d6lmrol5imqw94",
+    "productId": "30d6l7ycl5i9llaa",
+    "comment": "typescript for backend",
+    "rate": 5,
+    "createdAt": "2022-07-12T20:32:35.272Z",
+    "updatedAt": "2022-07-12T21:31:03.339Z"
+  }
+]
