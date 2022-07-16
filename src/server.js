@@ -13,10 +13,10 @@ import {
 import createHttpError from "http-errors"
 
 const server = express()
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 const publicFolderPath = join(process.cwd(), "./public")
 
-const whitelist = [process.env.FE_DEV_URL, process.FE_PROD_URL]
+const whitelist = [process.env.FE_DEV_URL, process.env.FE_PROD_URL]
 
 const corsOptions = {
   origin: (origin, next) => {
