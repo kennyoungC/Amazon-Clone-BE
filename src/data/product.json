@@ -13,7 +13,7 @@
   {
     "_id": "30d6l8i0l5ikqyzu",
     "description": "somthing longer new added",
-    "imageUrl": "https://placeholder.com/150",
+    "imageUrl": "https://images.unsplash.com/photo-1584006682522-dc17d6c0d9ac?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80",
     "name": "samsung s20",
     "price": 500,
     "brand": "samsung",
@@ -21,15 +21,38 @@
     "createdAt": "2022-07-12T19:36:39.593Z",
     "updatedAt": "2022-07-12T19:36:39.593Z"
   },
+
   {
-    "_id": "30d6l8i0l5iku1zy",
-    "description": "somthing longer new added",
-    "imageUrl": "https://placeholder.com/150",
-    "name": "samsung s20",
-    "price": 500,
-    "brand": "samsung",
+    "_id": "30d6ln5sl5m95bje",
+    "description": "feel the world in your hands",
+    "imageUrl": "https://images.unsplash.com/photo-1490222939321-2a267366a124?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "name": "itel t12",
+    "price": 400,
+    "brand": "itel",
     "category": "smartphones",
-    "createdAt": "2022-07-12T19:39:03.454Z",
-    "updatedAt": "2022-07-12T19:39:03.454Z"
+    "createdAt": "2022-07-15T09:22:58.345Z",
+    "updatedAt": "2022-07-15T09:22:58.345Z"
+  },
+  {
+    "_id": "30d6l9bsl5mc5vxu",
+    "description": "Very delicious ",
+    "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80 ",
+    "name": "Pizza",
+    "price": "125",
+    "brand": "Dominos ",
+    "category": "Food ",
+    "createdAt": "2022-07-15T10:47:23.634Z",
+    "updatedAt": "2022-07-15T10:47:23.634Z"
+  },
+  {
+    "_id": "30d6l9bsl5mcjejw",
+    "description": "faster than ever before",
+    "imageUrl": "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "name": "corolla",
+    "price": "1400",
+    "brand": "toyota",
+    "category": "car",
+    "createdAt": "2022-07-15T10:57:54.284Z",
+    "updatedAt": "2022-07-15T10:57:54.284Z"
   }
 ]
