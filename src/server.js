@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import listEndpoints from "express-list-endpoints"
 import productRouter from "./apis/products/index.js"
-
+import { join } from "path"
 import reviewsRouter from "./apis/reviews/index.js"
 import {
   badRequestErrorHandler,
