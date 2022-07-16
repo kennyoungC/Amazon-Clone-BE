@@ -4,11 +4,11 @@ import uniqid from "uniqid"
 import { checkProductSchema, checkValidationResult } from "./validation.js"
 
 import {
+  cloudinaryUploader,
   getProducts,
   saveUsersProductImg,
   writeProducts,
 } from "../../libs/index.js"
-import multer from "multer"
 
 const productRouter = express.Router()
 
@@ -119,19 +119,10 @@ productRouter.delete("/:productId", async (req, res, next) => {
     next(error)
   }
 })
-export default productRouter
 
 productRouter.post(
   "/:productId/upload",
-  multer({
-    fileFilter: (req, file, multerNext) => {
-      if (file.mimetype.startsWith("image/")) {
-        multerNext(null, true)
-      } else {
-        multerNext(createHttpError(400, "Only images are allowed!"))
-      }
-    },
-  }).single("product"),
+  cloudinaryUploader,
   async (req, res, next) => {
     try {
       const { productId } = req.params
@@ -139,25 +130,25 @@ productRouter.post(
       const foundProductIndex = products.findIndex(
         (prod) => prod._id === productId
       )
-      if (foundProductIndex !== -1) {
-        const foundProduct = products[foundProductIndex]
-        const ext = req.file.mimetype.split("/")[1]
-        const fileName = `${productId}.${ext}`
-        await saveUsersProductImg(fileName, req.file.buffer)
-        const link = `http://localhost:3003/img/products/${fileName}`
-        const updatedProduct = {
-          ...foundProduct,
-          imageUrl: link,
-        }
-        console.log(updatedProduct)
-        products[foundProductIndex] = updatedProduct
-        await writeProducts(products)
-        res.send()
-      } else {
-        next(createHttpError(404, `Product with id ${productId} not found`))
-      }
+      console.log("FILE", req.file)
+      // if (foundProductIndex !== -1) {
+      //   const foundProduct = products[foundProductIndex]
+
+      //   const updatedProduct = {
+      //     ...foundProduct,
+      //     imageUrl: link,
+      //   }
+      //   console.log(updatedProduct)
+      //   products[foundProductIndex] = updatedProduct
+      //   await writeProducts(products)
+      //   res.send()
+      // } else {
+      //   next(createHttpError(404, `Product with id ${productId} not found`))
+      // }
+      res.send(req.file)
     } catch (error) {
       next(error)
     }
   }
 )
+export default productRouter
