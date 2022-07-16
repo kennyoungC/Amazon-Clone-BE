@@ -130,22 +130,21 @@ productRouter.post(
       const foundProductIndex = products.findIndex(
         (prod) => prod._id === productId
       )
-      console.log("FILE", req.file)
-      // if (foundProductIndex !== -1) {
-      //   const foundProduct = products[foundProductIndex]
 
-      //   const updatedProduct = {
-      //     ...foundProduct,
-      //     imageUrl: link,
-      //   }
-      //   console.log(updatedProduct)
-      //   products[foundProductIndex] = updatedProduct
-      //   await writeProducts(products)
-      //   res.send()
-      // } else {
-      //   next(createHttpError(404, `Product with id ${productId} not found`))
-      // }
-      res.send(req.file)
+      if (foundProductIndex !== -1) {
+        const foundProduct = products[foundProductIndex]
+
+        const updatedProduct = {
+          ...foundProduct,
+          imageUrl: req.file.path,
+        }
+        console.log(updatedProduct)
+        products[foundProductIndex] = updatedProduct
+        await writeProducts(products)
+        res.send("Image Uploaded Successfully")
+      } else {
+        next(createHttpError(404, `Product with id ${productId} not found`))
+      }
     } catch (error) {
       next(error)
     }
