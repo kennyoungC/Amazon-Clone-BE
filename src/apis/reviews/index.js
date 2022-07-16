@@ -39,12 +39,9 @@ reviewsRouter.post(
     try {
       const products = await getProducts()
       const reviews = await getReviews()
-      console.log(products)
       const { comment, rate } = req.body
       const { productId } = req.params
-      console.log(productId)
       const productIdIsValid = products.find((prod) => prod._id === productId)
-      console.log(productIdIsValid)
       if (productIdIsValid) {
         const newReview = {
           _id: uniqid(),

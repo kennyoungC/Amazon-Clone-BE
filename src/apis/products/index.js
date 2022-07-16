@@ -138,7 +138,6 @@ productRouter.post(
           ...foundProduct,
           imageUrl: req.file.path,
         }
-        console.log(updatedProduct)
         products[foundProductIndex] = updatedProduct
         await writeProducts(products)
         res.send("Image Uploaded Successfully")
